@@ -43,9 +43,17 @@ def main():
         print(f"Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.2f}%")
         print(f"Test Loss: {test_loss:.4f}, Test Acc: {test_acc:.2f}%")
         
+        with open('/content/drive/MyDrive/vit_project/logs/vit_cifar10_metrics.txt', 'a') as f:
+            f.write(f"{epoch},{train_loss:.4f},{train_acc:.2f},{test_loss:.4f},{test_acc:.2f}\n")
+        
         if test_acc > best_acc:
             best_acc = test_acc
             torch.save(model.state_dict(), 'experiments/vit_cifar10_best.pth')
+            
+        torch.save(
+        model.state_dict(),
+        f'/content/drive/MyDrive/vit_project/experiments/vit_cifar10_epoch_{epoch+1}.pth'
+        )
     
     print(f"\nBest Test Accuracy: {best_acc:.2f}%")
 

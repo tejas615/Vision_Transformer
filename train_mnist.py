@@ -1,4 +1,3 @@
-# train_mnist.py
 import torch
 from models.vit import VisionTransformer
 from utils.data import get_mnist_loaders

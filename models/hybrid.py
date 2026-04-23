@@ -1,4 +1,7 @@
 import torch.nn as nn
+import torch
+from models.vit import TransformerBlock
+
 
 class CNNPatchEmbed(nn.Module):
     """Replace simple linear projection with CNN feature extractor"""
@@ -29,4 +32,51 @@ class CNNPatchEmbed(nn.Module):
         x = self.conv_stem(x)  # [B, embed_dim, H/4, W/4]
         x = x.flatten(2)  # [B, embed_dim, num_patches]
         x = x.transpose(1, 2)  # [B, num_patches, embed_dim]
+        return x
+    
+
+
+class HybridViT(nn.Module):
+    """ViT with CNN patch embedding"""
+    def __init__(self, config):
+        super().__init__()
+        # Use CNN patch embedding instead of linear
+        self.patch_embed = CNNPatchEmbed(
+            img_size=config.img_size,
+            patch_size=config.patch_size,
+            in_channels=1 if config.dataset == 'MNIST' else 3,
+            embed_dim=config.embed_dim
+        )
+        
+        # Rest is same as ViT
+        self.cls_token = nn.Parameter(torch.zeros(1, 1, config.embed_dim))
+        num_patches = self.patch_embed.num_patches
+        self.pos_embed = nn.Parameter(torch.zeros(1, num_patches + 1, config.embed_dim))
+        
+        self.blocks = nn.ModuleList([
+            TransformerBlock(config.embed_dim, config.num_heads, 
+                           config.mlp_ratio, config.dropout)
+            for _ in range(config.num_layers)
+        ])
+        
+        self.norm = nn.LayerNorm(config.embed_dim)
+        self.head = nn.Linear(config.embed_dim, config.num_classes)
+        
+        # Initialize
+        nn.init.trunc_normal_(self.pos_embed, std=0.02)
+        nn.init.trunc_normal_(self.cls_token, std=0.02)
+    
+    def forward(self, x):
+        B = x.shape[0]
+        x = self.patch_embed(x)
+        
+        cls_tokens = self.cls_token.expand(B, -1, -1)
+        x = torch.cat([cls_tokens, x], dim=1)
+        x = x + self.pos_embed
+        
+        for block in self.blocks:
+            x = block(x)
+        
+        x = self.norm(x[:, 0])
+        x = self.head(x)
         return x

@@ -48,7 +48,7 @@ def main():
         
         if test_acc > best_acc:
             best_acc = test_acc
-            torch.save(model.state_dict(), 'experiments/vit_cifar10_best.pth')
+            torch.save(model.state_dict(), 'experiments/hybrid_cifar10_best.pth')
             
         torch.save(
         model.state_dict(),

@@ -14,6 +14,7 @@ def main():
     
     # Model
     model = HybridViT(config).to(device)
+    model.load_state_dict(torch.load('/content/drive/MyDrive/vit_project/experiments/hybrid_cifar10_epoch_82.pth'))
     print(f"Parameters: {sum(p.numel() for p in model.parameters()):,}")
     
     # Optimizer & Loss

@@ -1,4 +1,4 @@
-from cifar_config import CIFAR10Config
+from configs.cifar_config import CIFAR10Config
 
 class CIFAR100Config(CIFAR10Config):
     dataset = 'CIFAR100'

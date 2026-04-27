@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import torch
 
 def plot_training_curves(log_file, save_path):
     # Parse log file
@@ -37,6 +38,49 @@ def plot_training_curves(log_file, save_path):
     ax2.set_ylabel('Accuracy (%)')
     ax2.legend()
     ax2.grid(True)
+    
+    plt.tight_layout()
+    plt.savefig(save_path)
+    
+
+
+def visualize_attention(model, image, save_path):
+    """Visualize attention maps from different layers"""
+    model.eval()
+    
+    # Hook to capture attention weights
+    attention_maps = []
+    
+    def hook_fn(module, input, output):
+        # output[1] is attention weights from MultiheadAttention
+        attention_maps.append(output[1].detach())
+    
+    # Register hooks on attention layers
+    hooks = []
+    for block in model.blocks:
+        hook = block.attn.register_forward_hook(hook_fn)
+        hooks.append(hook)
+    
+    # Forward pass
+    with torch.no_grad():
+        _ = model(image.unsqueeze(0))
+    
+    # Remove hooks
+    for hook in hooks:
+        hook.remove()
+    
+    # Plot attention maps
+    num_layers = len(attention_maps)
+    fig, axes = plt.subplots(2, num_layers//2, figsize=(15, 6))
+    
+    for i, attn in enumerate(attention_maps):
+        # Average over heads, get CLS token attention to patches
+        attn_map = attn[0].mean(0)[0, 1:].reshape(8, 8)  # 64 patches → 8×8
+        
+        ax = axes[i // (num_layers//2), i % (num_layers//2)]
+        im = ax.imshow(attn_map.cpu(), cmap='viridis')
+        ax.set_title(f'Layer {i+1}')
+        ax.axis('off')
     
     plt.tight_layout()
     plt.savefig(save_path)

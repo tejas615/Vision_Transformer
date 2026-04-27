@@ -61,8 +61,8 @@ Conv(128→384, 1×1) → 64 patches of 384-D
 
 | Model       | Parameters | MNIST  | CIFAR-10 | CIFAR-100 | Training Time (CIFAR-10) |
 |-------------|-----------|--------|----------|-----------|-------------------------|
-| ViT         | 2.68M      | 98.62%  | 48.04%    | 42.1%     | 3.5 hours               |
-| Hybrid ViT  | 2.65M      | 98.84%  | 61.05%    | 48.7%     | 3.2 hours               |
+| ViT         | 2.68M      | 98.62%  | 48.04%    | 14.73%(50 epochs)     | 3.5 hours               |
+| Hybrid ViT  | 2.65M      | 98.84%  | 61.05%    | 23.02%(50 epochs)     | 3.2 hours               |
 | **Improvement** | +7%   | +0.4%  | **+7.5%** | **+6.6%** | **-9% time**           |
 
 ### Key Findings

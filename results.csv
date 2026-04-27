@@ -1,3 +1,3 @@
-,Model,Parameters (M),MNIST Accuracy,CIFAR-10 Accuracy
-0,ViT,2.684554,98.62,48.04
-1,Hybrid ViT,2.684554,98.84,61.05
+,Model,Parameters (M),MNIST Accuracy,CIFAR-10 Accuracy,CIFAR-100 Accuarcy
+0,ViT,2.684554,98.62,48.04,14.73
+1,Hybrid ViT,2.684554,98.84,61.05,23.02

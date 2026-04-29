@@ -150,6 +150,7 @@ class HybridViT(nn.Module):
     def __init__(self, config):
         super().__init__()
         # CNN-based patch embedding (our innovation!)
+        self.config = config
         self.patch_embed = CNNPatchEmbed(
             img_size=config.img_size,
             patch_size=config.patch_size,

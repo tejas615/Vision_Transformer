@@ -176,6 +176,7 @@ class VisionTransformer(nn.Module):
     def __init__(self, config):
         super().__init__()
         # Patch embedding layer
+        self.config = config
         self.patch_embed = PatchEmbed(
             img_size=config.img_size,
             patch_size=config.patch_size,

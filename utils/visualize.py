@@ -583,17 +583,47 @@ def generate_all_visualizations(vit_model_path, hybrid_model_path, config, devic
     print("\n3. Generating architecture comparison...")
     plot_architecture_comparison()
     
-    # 4. Attention maps
     print("\n4. Generating attention maps...")
+
     # Load hybrid model
     hybrid_model = HybridViT(config).to(device)
-    hybrid_model.load_state_dict(torch.load(hybrid_model_path, map_location=device))
+    missing, unexpected = hybrid_model.load_state_dict(
+        torch.load(hybrid_model_path, map_location=device),
+        strict=False
+    )
     
-    # Get a sample image
+    hybrid_model.eval()
+
+    # CIFAR-10 class names
+    classes = ['airplane','automobile','bird','cat','deer',
+           'dog','frog','horse','ship','truck']
+
+    transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize((0.5, 0.5, 0.5), 
+                            (0.5, 0.5, 0.5))
+    ])
+
     test_dataset = datasets.CIFAR10('./data', train=False,
-                                    transform=transforms.ToTensor())
-    sample_image, _ = test_dataset[0]
-    
+                                transform=transform,
+                                download=True)
+
+    idx = 18
+    sample_image, label = test_dataset[idx]
+
+    # ------------------ Prediction ------------------
+    with torch.no_grad():
+        input_tensor = sample_image.unsqueeze(0).to(device)
+        outputs = hybrid_model(input_tensor)
+        _, pred = torch.max(outputs, 1)
+
+    pred_class = classes[pred.item()]
+    true_class = classes[label]
+
+    print(f"True Label: {true_class}")
+    print(f"Predicted : {pred_class}")
+
+    # ------------------ Attention ------------------
     visualize_attention_maps(hybrid_model, sample_image, device)
     
     # 5. Results table

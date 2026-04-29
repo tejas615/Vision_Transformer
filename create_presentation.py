@@ -383,9 +383,9 @@ class PresentationCreator:
         p.space_after = Pt(12)
         
         findings = [
-            "CIFAR-10: +7.5% accuracy improvement (67.3% → 74.8%)",
-            "CIFAR-100: +6.6% accuracy improvement (42.1% → 48.7%)",
-            "9% faster training time despite 7% more parameters",
+            "CIFAR-10: +13% accuracy improvement (48.04% → 61.05%)",
+            "CIFAR-100: +8.3% accuracy improvement (14.73% → 23.02%)",
+            "9% faster training time ",
             "Gap is even larger with less training data (see next slide)",
             "Only minimal architecture change needed for big gains!"
         ]

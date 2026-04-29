@@ -119,7 +119,7 @@ class PresentationCreator:
             "No built-in locality: doesn't know neighboring pixels are related",
             "No translation equivariance: must learn that a cat is a cat everywhere",
             "Requires massive datasets: 14M-300M images for pre-training",
-            "Poor performance on small datasets: ~60% on CIFAR-10 without pre-training"
+            "Poor performance on small datasets: ~40% on CIFAR-10 without pre-training"
         ]
         
         for prob in problems:
@@ -159,7 +159,7 @@ class PresentationCreator:
             "CNNs provide locality bias: small filters process local regions",
             "CNNs provide translation equivariance: weight sharing across image",
             "Transformers still capture global dependencies",
-            "Result: 7.5% better accuracy on CIFAR-10 with same training data"
+            "Result: 13% better accuracy on CIFAR-10 with same training data"
         ]
         
         for sol in solutions:

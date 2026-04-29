@@ -67,7 +67,7 @@ Conv(128→384, 1×1) → 64 patches of 384-D
 
 ### Key Findings
 - 🎯 **Hybrid achieves 7.5% higher accuracy** on CIFAR-10 without pre-training
-- ⚡ **Faster convergence**: Reaches 70% accuracy in 40 epochs vs. 70 epochs for ViT
+- ⚡ **Faster convergence**: Reaches 55% accuracy in 40 epochs 
 - 📈 **Better data efficiency**: Gap widens as dataset size decreases
 - 🧠 **Cleaner attention patterns**: CNN features help Transformer focus on relevant regions
 

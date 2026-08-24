@@ -15,7 +15,6 @@ This project implements and improves upon the **Vision Transformer (ViT)** archi
 - ✅ Novel hybrid architecture combining CNN feature extraction with Transformer encoding
 - ✅ Comprehensive evaluation on MNIST, CIFAR-10, and CIFAR-100
 - ✅ **5-10% accuracy improvement** over pure ViT on small datasets
-- ✅ **50% faster convergence** during training
 
 ## 🎯 Motivation
 
@@ -59,15 +58,13 @@ Conv(128→384, 1×1) → 64 patches of 384-D
 
 ### Accuracy Comparison
 
-| Model       | Parameters | MNIST  | CIFAR-10 | CIFAR-100 | Training Time (CIFAR-10) |
-|-------------|-----------|--------|----------|-----------|-------------------------|
-| ViT         | 2.68M      | 98.62%  | 48.04%    | 14.73%(50 epochs)     | 3.5 hours               |
-| Hybrid ViT  | 2.78M      | 98.84%  | 61.05%    | 23.02%(50 epochs)     | 3.2 hours               |
+| Model       | Parameters | MNIST  | CIFAR-10 | CIFAR-100 | 
+|-------------|-----------|--------|----------|-----------|
+| ViT         | 2.68M      | 98.62%  | 48.04%    | 14.73%(50 epochs)     | 
+| Hybrid ViT  | 2.78M      | 98.84%  | 61.05%    | 23.02%(50 epochs)     | 
 
 ### Key Findings
 - 🎯 **Hybrid achieves 7.5% higher accuracy** on CIFAR-10 without pre-training
-- ⚡ **Faster convergence**: Reaches 55% accuracy in 40 epochs 
-- 📈 **Better data efficiency**: Gap widens as dataset size decreases
 - 🧠 **Cleaner attention patterns**: CNN features help Transformer focus on relevant regions
 
 ## 🚀 Quick Start

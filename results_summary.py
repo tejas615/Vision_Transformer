@@ -2,7 +2,7 @@ import pandas as pd
 
 results = {
     'Model': ['ViT', 'Hybrid ViT'],
-    'Parameters (M)': [2684554/1e6, 2684554/1e6],
+    'Parameters(for MNIST) (M)': [2684554/1e6, 2780938/1e6],
     'MNIST Accuracy': [98.62, 98.84],  
     'CIFAR-10 Accuracy': [48.04, 61.05],
     'CIFAR-100 Accuarcy': [14.73,23.02]
